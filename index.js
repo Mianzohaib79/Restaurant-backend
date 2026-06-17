@@ -11,7 +11,7 @@ const orders = require("./routes/orderList");
 connectDB();
 
 const allowedOrigins = [
-    "https://restaurant-app-murex-nine.vercel.app",
+    "https://restaurant-frontend-teal-chi.vercel.app",
     "http://localhost:5173",
     process.env.FRONTEND_URL
 ].filter(Boolean);
