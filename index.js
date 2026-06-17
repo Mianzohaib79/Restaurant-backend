@@ -10,17 +10,24 @@ const orders = require("./routes/orderList");
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://restaurant-app-murex-nine.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", auth);
 app.use("/api/categories", categories);
 app.use("/api/menu", menu);
 app.use("/api/orders", orders);
 
-const { PORT = 8000 } = process.env;
+// const { PORT = 8000 } = process.env;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port: ${PORT}`);
+// });
+
+
+module.exports = app;
