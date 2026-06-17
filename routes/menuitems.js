@@ -69,6 +69,7 @@ router.post('/add-menuitem', [verifyToken, upload.fields([{ name: 'image' }])], 
 router.get('/get-menuitems', async (req, res) => {
     try {
         const menuitems = await MenuItems.find();
+
         if (!menuitems) {
             return res.status(404).json({ success: false, message: 'No menu items found', isError: true });
         }
