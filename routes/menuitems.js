@@ -74,7 +74,7 @@ router.get('/get-menuitems', async (req, res) => {
             return res.status(404).json({ success: false, message: 'No menu items found', isError: true });
         }
         // Return both camelCase and lowercase key for frontend robustness
-        res.status(200).json({ success: true, menuitems, menuItems: menuitems, isError: false });
+        res.status(200).json({ success: true, menuitems, isError: false });
     } catch (err) {
         console.error("Error in get-menuitems:", err);
         res.status(500).json({ success: false, message: err.message || 'Internal Server Error', isError: true });
