@@ -10,8 +10,20 @@ const orders = require("./routes/orderList");
 
 connectDB();
 
+const allowedOrigins = [
+    "https://restaurant-app-murex-nine.vercel.app",
+    "http://localhost:5173",
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-    origin: "https://restaurant-app-murex-nine.vercel.app",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+        }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -23,11 +35,13 @@ app.use("/api/categories", categories);
 app.use("/api/menu", menu);
 app.use("/api/orders", orders);
 
-// const { PORT = 8000 } = process.env;
+const PORT = process.env.PORT || 8000;
 
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port: ${PORT}`);
-// });
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port: ${PORT}`);
+    });
+}
 
 
 module.exports = app;

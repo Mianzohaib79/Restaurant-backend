@@ -4,9 +4,15 @@ const { JWT_SECRET } = process.env;
 
 const verifyToken = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(" ")[1];
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Unauthorized", isError: true });
+        }
 
-        if (!token) { return res.status(401).json({ message: "Unauthorized", isError: true }); }
+        const token = authHeader.split(" ")[1];
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized", isError: true });
+        }
 
         jwt.verify(token, JWT_SECRET, (err, result) => {
             if (err) { return res.status(401).json({ message: "Unauthorized", isError: true }); }
