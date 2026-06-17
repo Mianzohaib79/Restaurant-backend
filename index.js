@@ -35,6 +35,15 @@ app.use("/api/categories", categories);
 app.use("/api/menu", menu);
 app.use("/api/orders", orders);
 
+app.get("/", (req, res) => {
+    res.json({
+        success: true,
+        message: "Restaurant App Server is running successfully!",
+        status: "OK",
+        timestamp: new Date()
+    });
+});
+
 const PORT = process.env.PORT || 8000;
 
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
